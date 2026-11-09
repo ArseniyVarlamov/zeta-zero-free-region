@@ -1,0 +1,19 @@
+import PrimeNumberTheoremAnd.IEANTN.Varlamov.PhaseSOS
+
+namespace Varlamov.PhaseCertificate4P17
+set_option maxRecDepth 32768
+set_option maxHeartbeats 10000000
+
+def weights : List ℤ := [558183273599, 34847564217, 2065818595, 122006510, 7200063, 424650, 25030, 1473, 85, 4]
+def factor : List ℤ := [8542887627115, 10873841517780, 16410700502632, 9764665143584, 6056583498308, -840214699475, 677363228227, -286768950016, 399542796242, 93747928535, -58657784826, 16266005431, 16254607217, -7696401805, 18872889479, -14959918280, 11861506400, -1848481170, 1913726872, 1545660452, -3702264238, 1486101628, 1721121043, -2139604298, 1420100399, 132147408, 133312807, -92791903, -95347206, 5470753, 239546169, -142409127, -163953574, 221181000, -11004059, -79266345, 49200117, 10234660, 7746756, -11883510, -5308789, 13678872, 1056986, -12426480, 4040678, 6469649, -1214396, -4836116, 3583138, 454612, -166896, -517983, 605757, -4999, -392542, 243190, -148031, 322295, -59764, -248326, 207715, -13528, -8648, 31774, -13077, -26575, 34941, -8778, -12007, 19692, -2008, -14449, 9943, -738, 3183, -1026, -2294, 1850, 654, -678, -666, 1249, -106, -988, 591, 173, 15, -148, 66, 26, 29, -38, -34, 74, -14, -58, 47, 0, -4, 3, -1, 1, 2, -2, -2, 4, -1, -3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+def target : ℤ := 1242750
+
+/-- Exact integer SOS residual certificate; numerical search is untrusted. -/
+lemma sos_check : PhaseSOS.check 120 weights factor target = true := by decide +kernel
+
+theorem rounded_lower_bound (x : ℝ) :
+    (((target - 1 : ℤ) : ℝ) / PhaseSOS.targetScale) ≤ PhaseSOS.roundedPhase weights x :=
+  PhaseSOS.checked_lower_bound 120 weights factor target sos_check x
+
+#print axioms rounded_lower_bound
+end Varlamov.PhaseCertificate4P17
